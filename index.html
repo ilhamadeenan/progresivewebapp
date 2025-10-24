@@ -1,1 +1,788 @@
+<!DOCTYPE html>
+<html lang="id" class="h-full">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EcoQuest Indonesia - Platform Pembelajaran Lingkungan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        body {
+            box-sizing: border-box;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
+        }
+        
+        @keyframes pulse-green {
+            0%, 100% { background-color: rgb(34, 197, 94); }
+            50% { background-color: rgb(22, 163, 74); }
+        }
+        
+        .float-animation { animation: float 3s ease-in-out infinite; }
+        .pulse-green { animation: pulse-green 2s ease-in-out infinite; }
+        
+        .gradient-bg {
+            background: linear-gradient(135deg, #10b981 0%, #059669 50%, #047857 100%);
+        }
+        
+        .card-hover {
+            transition: all 0.3s ease;
+        }
+        
+        .card-hover:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+        
+        .progress-bar {
+            transition: width 0.5s ease-in-out;
+        }
+    </style>
+</head>
+<body class="h-full bg-gradient-to-br from-green-50 to-emerald-100 font-sans">
+    <div id="app" class="min-h-full">
+        <!-- Header Navigation -->
+        <header class="gradient-bg shadow-lg sticky top-0 z-50">
+            <nav class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+                <div class="flex justify-between items-center h-16">
+                    <div class="flex items-center space-x-3">
+                        <div class="w-10 h-10 bg-white rounded-full flex items-center justify-center">
+                            <span class="text-2xl">🌱</span>
+                        </div>
+                        <h1 class="text-xl font-bold text-white">EcoQuest Indonesia</h1>
+                    </div>
+                    
+                    <div class="hidden md:flex items-center space-x-6">
+                        <button onclick="showSection('dashboard')" class="text-white hover:text-green-200 transition-colors">Dashboard</button>
+                        <button onclick="showSection('modules')" class="text-white hover:text-green-200 transition-colors">Modul</button>
+                        <button onclick="showSection('lab')" class="text-white hover:text-green-200 transition-colors">Eco-Lab</button>
+                        <button onclick="showSection('community')" class="text-white hover:text-green-200 transition-colors">Komunitas</button>
+                    </div>
+                    
+                    <div class="flex items-center space-x-3">
+                        <div class="bg-white/20 px-3 py-1 rounded-full">
+                            <span class="text-white text-sm">🏆 <span id="userPoints">1,250</span> Eco-Points</span>
+                        </div>
+                        <div class="w-8 h-8 bg-white rounded-full flex items-center justify-center">
+                            <span class="text-lg">👤</span>
+                        </div>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <!-- Main Content -->
+        <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+            
+            <!-- Dashboard Section -->
+            <section id="dashboard" class="section-content">
+                <!-- Hero Section -->
+                <div class="gradient-bg rounded-2xl p-8 mb-8 text-white relative overflow-hidden">
+                    <div class="relative z-10">
+                        <h2 class="text-3xl font-bold mb-4">Selamat Datang, Eco-Hero! 🌟</h2>
+                        <p class="text-lg mb-6 opacity-90">Bergabunglah dalam misi menyelamatkan lingkungan Indonesia melalui pembelajaran interaktif</p>
+                        <div class="flex flex-wrap gap-4">
+                            <div class="bg-white/20 px-4 py-2 rounded-lg">
+                                <span class="text-sm">Level: </span>
+                                <span class="font-bold">Eco-Warrior</span>
+                            </div>
+                            <div class="bg-white/20 px-4 py-2 rounded-lg">
+                                <span class="text-sm">Misi Selesai: </span>
+                                <span class="font-bold">12/20</span>
+                            </div>
+                            <div class="bg-white/20 px-4 py-2 rounded-lg">
+                                <span class="text-sm">Streak: </span>
+                                <span class="font-bold">7 hari</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="absolute right-4 top-4 text-6xl opacity-20 float-animation">🌍</div>
+                </div>
+
+                <!-- Quick Stats -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-gray-800">Jejak Karbon Mingguan</h3>
+                            <span class="text-2xl">📊</span>
+                        </div>
+                        <div class="text-2xl font-bold text-green-600 mb-2">-15%</div>
+                        <p class="text-sm text-gray-600">Berkurang dari minggu lalu!</p>
+                        <div class="mt-4 bg-gray-200 rounded-full h-2">
+                            <div class="bg-green-500 h-2 rounded-full progress-bar" style="width: 75%"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-gray-800">Pohon Virtual</h3>
+                            <span class="text-2xl">🌳</span>
+                        </div>
+                        <div class="text-2xl font-bold text-green-600 mb-2">47</div>
+                        <p class="text-sm text-gray-600">Pohon yang kamu tanam</p>
+                        <button onclick="showVirtualForest()" class="mt-4 bg-green-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition-colors">Lihat Hutan</button>
+                    </div>
+                    
+                    <div class="bg-white rounded-xl p-6 shadow-lg card-hover">
+                        <div class="flex items-center justify-between mb-4">
+                            <h3 class="font-semibold text-gray-800">Badge Terbaru</h3>
+                            <span class="text-2xl">🏅</span>
+                        </div>
+                        <div class="text-lg font-bold text-yellow-600 mb-2">Carbon Tracker</div>
+                        <p class="text-sm text-gray-600">Melacak jejak karbon 7 hari berturut-turut</p>
+                    </div>
+                </div>
+
+                <!-- Current Mission -->
+                <div class="bg-white rounded-xl p-6 shadow-lg mb-8">
+                    <h3 class="text-xl font-bold mb-4 flex items-center">
+                        <span class="mr-2">🎯</span>
+                        Misi Aktif: Jejak Karbon Digital
+                    </h3>
+                    <div class="bg-gray-200 rounded-full h-3 mb-4">
+                        <div class="bg-green-500 h-3 rounded-full progress-bar" style="width: 60%"></div>
+                    </div>
+                    <p class="text-gray-600 mb-4">Progress: 3/5 aktivitas selesai</p>
+                    <button onclick="continueModule('carbon-footprint')" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">Lanjutkan Misi</button>
+                </div>
+            </section>
+
+            <!-- Modules Section -->
+            <section id="modules" class="section-content hidden">
+                <h2 class="text-2xl font-bold mb-6 flex items-center">
+                    <span class="mr-3">📚</span>
+                    Modul Pembelajaran
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                    <!-- Module 1 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                        <div class="h-32 bg-gradient-to-r from-blue-400 to-blue-600 flex items-center justify-center">
+                            <span class="text-4xl">🦶</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Jejak Karbon Digital</h3>
+                            <p class="text-gray-600 text-sm mb-4">Pelajari dampak aktivitas sehari-hari terhadap lingkungan melalui kalkulator interaktif</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Pemula</span>
+                                <span class="text-xs text-gray-500">45 menit</span>
+                            </div>
+                            <button onclick="startModule('carbon-footprint')" class="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition-colors">Mulai Belajar</button>
+                        </div>
+                    </div>
+
+                    <!-- Module 2 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                        <div class="h-32 bg-gradient-to-r from-yellow-400 to-orange-500 flex items-center justify-center">
+                            <span class="text-4xl">⚡</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Energi Masa Depan Indonesia</h3>
+                            <p class="text-gray-600 text-sm mb-4">Eksplorasi potensi energi terbarukan dan rancang pembangkit listrik virtual</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Menengah</span>
+                                <span class="text-xs text-gray-500">60 menit</span>
+                            </div>
+                            <button onclick="startModule('renewable-energy')" class="w-full bg-orange-500 text-white py-2 rounded-lg hover:bg-orange-600 transition-colors">Mulai Belajar</button>
+                        </div>
+                    </div>
+
+                    <!-- Module 3 -->
+                    <div class="bg-white rounded-xl shadow-lg overflow-hidden card-hover">
+                        <div class="h-32 bg-gradient-to-r from-green-400 to-emerald-600 flex items-center justify-center">
+                            <span class="text-4xl">🦋</span>
+                        </div>
+                        <div class="p-6">
+                            <h3 class="font-bold text-lg mb-2">Biodiversitas Nusantara</h3>
+                            <p class="text-gray-600 text-sm mb-4">Jelajahi keanekaragaman hayati Indonesia dan strategi konservasi</p>
+                            <div class="flex justify-between items-center mb-4">
+                                <span class="text-xs bg-red-100 text-red-800 px-2 py-1 rounded">Lanjutan</span>
+                                <span class="text-xs text-gray-500">75 menit</span>
+                            </div>
+                            <button onclick="startModule('biodiversity')" class="w-full bg-emerald-500 text-white py-2 rounded-lg hover:bg-emerald-600 transition-colors">Mulai Belajar</button>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Eco-Lab Section -->
+            <section id="lab" class="section-content hidden">
+                <h2 class="text-2xl font-bold mb-6 flex items-center">
+                    <span class="mr-3">🧪</span>
+                    Eco-Lab Simulator
+                </h2>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <h3 class="text-xl font-bold mb-4">Simulasi Dampak Lingkungan</h3>
+                    <p class="text-gray-600 mb-6">Ubah parameter lingkungan dan lihat dampaknya secara real-time</p>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Controls -->
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Tingkat Polusi Udara</label>
+                                <input type="range" id="pollutionSlider" min="0" max="100" value="30" class="w-full" onchange="updateSimulation()">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>Bersih</span>
+                                    <span id="pollutionValue">30%</span>
+                                    <span>Berbahaya</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Deforestasi (%)</label>
+                                <input type="range" id="deforestationSlider" min="0" max="100" value="20" class="w-full" onchange="updateSimulation()">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>0%</span>
+                                    <span id="deforestationValue">20%</span>
+                                    <span>100%</span>
+                                </div>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Suhu Global (+°C)</label>
+                                <input type="range" id="temperatureSlider" min="0" max="5" value="1.5" step="0.1" class="w-full" onchange="updateSimulation()">
+                                <div class="flex justify-between text-xs text-gray-500 mt-1">
+                                    <span>0°C</span>
+                                    <span id="temperatureValue">+1.5°C</span>
+                                    <span>+5°C</span>
+                                </div>
+                            </div>
+                            
+                            <button onclick="resetSimulation()" class="w-full bg-gray-500 text-white py-2 rounded-lg hover:bg-gray-600 transition-colors">Reset Simulasi</button>
+                        </div>
+                        
+                        <!-- Visualization -->
+                        <div class="bg-gradient-to-b from-blue-200 to-green-200 rounded-lg p-6 relative overflow-hidden" id="simulationView">
+                            <div class="text-center">
+                                <div class="text-6xl mb-4" id="earthEmoji">🌍</div>
+                                <div class="space-y-2">
+                                    <div class="flex justify-between">
+                                        <span>Kualitas Udara:</span>
+                                        <span id="airQuality" class="font-bold text-green-600">Baik</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Tutupan Hutan:</span>
+                                        <span id="forestCover" class="font-bold text-green-600">80%</span>
+                                    </div>
+                                    <div class="flex justify-between">
+                                        <span>Risiko Iklim:</span>
+                                        <span id="climateRisk" class="font-bold text-yellow-600">Sedang</span>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <!-- Floating particles for pollution effect -->
+                            <div id="pollutionParticles" class="absolute inset-0 pointer-events-none"></div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-6 p-4 bg-blue-50 rounded-lg">
+                        <h4 class="font-bold text-blue-800 mb-2">💡 Insight:</h4>
+                        <p id="simulationInsight" class="text-blue-700">Kondisi lingkungan saat ini masih dalam batas aman. Pertahankan upaya konservasi!</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Community Section -->
+            <section id="community" class="section-content hidden">
+                <h2 class="text-2xl font-bold mb-6 flex items-center">
+                    <span class="mr-3">👥</span>
+                    Community Action Hub
+                </h2>
+                
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    <!-- Leaderboard -->
+                    <div class="bg-white rounded-xl shadow-lg p-6">
+                        <h3 class="font-bold text-lg mb-4 flex items-center">
+                            <span class="mr-2">🏆</span>
+                            Leaderboard Mingguan
+                        </h3>
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between p-3 bg-yellow-50 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">🥇</span>
+                                    <div>
+                                        <div class="font-semibold">Sari Eco-Warrior</div>
+                                        <div class="text-xs text-gray-500">Jakarta</div>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-yellow-600">2,450 pts</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-gray-50 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">🥈</span>
+                                    <div>
+                                        <div class="font-semibold">Budi Green-Hero</div>
+                                        <div class="text-xs text-gray-500">Surabaya</div>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-gray-600">2,100 pts</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-orange-50 rounded-lg">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">🥉</span>
+                                    <div>
+                                        <div class="font-semibold">Andi Nature-Guard</div>
+                                        <div class="text-xs text-gray-500">Bandung</div>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-orange-600">1,890 pts</span>
+                            </div>
+                            
+                            <div class="flex items-center justify-between p-3 bg-green-50 rounded-lg border-2 border-green-200">
+                                <div class="flex items-center space-x-3">
+                                    <span class="text-xl">👤</span>
+                                    <div>
+                                        <div class="font-semibold">Kamu</div>
+                                        <div class="text-xs text-gray-500">Posisi #7</div>
+                                    </div>
+                                </div>
+                                <span class="font-bold text-green-600">1,250 pts</span>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Active Projects -->
+                    <div class="lg:col-span-2 bg-white rounded-xl shadow-lg p-6">
+                        <div class="flex justify-between items-center mb-4">
+                            <h3 class="font-bold text-lg flex items-center">
+                                <span class="mr-2">🌱</span>
+                                Proyek Komunitas Aktif
+                            </h3>
+                            <button onclick="showProjectForm()" class="bg-green-500 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-600 transition-colors">+ Buat Proyek</button>
+                        </div>
+                        
+                        <div class="space-y-4">
+                            <div class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-semibold">Bank Sampah Digital SMA 1 Jakarta</h4>
+                                    <span class="text-xs bg-green-100 text-green-800 px-2 py-1 rounded">Aktif</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">Membuat sistem digital untuk mengelola bank sampah sekolah dengan reward point</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-4 text-xs text-gray-500">
+                                        <span>👥 12 anggota</span>
+                                        <span>📍 Jakarta</span>
+                                        <span>⏰ 2 minggu lagi</span>
+                                    </div>
+                                    <button onclick="joinProject('bank-sampah')" class="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600 transition-colors">Gabung</button>
+                                </div>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-semibold">Kampanye Hemat Energi Sekolah</h4>
+                                    <span class="text-xs bg-yellow-100 text-yellow-800 px-2 py-1 rounded">Perencanaan</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">Edukasi siswa tentang penghematan energi melalui poster dan workshop interaktif</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-4 text-xs text-gray-500">
+                                        <span>👥 8 anggota</span>
+                                        <span>📍 Bandung</span>
+                                        <span>⏰ 1 bulan lagi</span>
+                                    </div>
+                                    <button onclick="joinProject('hemat-energi')" class="bg-blue-500 text-white px-3 py-1 rounded text-xs hover:bg-blue-600 transition-colors">Gabung</button>
+                                </div>
+                            </div>
+                            
+                            <div class="border rounded-lg p-4 hover:bg-gray-50 transition-colors">
+                                <div class="flex justify-between items-start mb-2">
+                                    <h4 class="font-semibold">Taman Vertikal Kelas</h4>
+                                    <span class="text-xs bg-blue-100 text-blue-800 px-2 py-1 rounded">Selesai</span>
+                                </div>
+                                <p class="text-sm text-gray-600 mb-3">Membuat taman vertikal di setiap kelas untuk meningkatkan kualitas udara</p>
+                                <div class="flex justify-between items-center">
+                                    <div class="flex items-center space-x-4 text-xs text-gray-500">
+                                        <span>👥 15 anggota</span>
+                                        <span>📍 Surabaya</span>
+                                        <span>✅ Berhasil</span>
+                                    </div>
+                                    <button class="bg-gray-300 text-gray-600 px-3 py-1 rounded text-xs cursor-not-allowed">Selesai</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Module Content (Carbon Footprint) -->
+            <section id="module-carbon-footprint" class="section-content hidden">
+                <div class="mb-6">
+                    <button onclick="showSection('modules')" class="text-green-600 hover:text-green-800 flex items-center mb-4">
+                        <span class="mr-2">←</span>
+                        Kembali ke Modul
+                    </button>
+                    <h2 class="text-2xl font-bold flex items-center">
+                        <span class="mr-3">🦶</span>
+                        Jejak Karbon Digital
+                    </h2>
+                </div>
+                
+                <div class="bg-white rounded-xl shadow-lg p-6 mb-6">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-xl font-bold">Kalkulator Jejak Karbon Personal</h3>
+                        <div class="text-sm text-gray-500">Langkah 1 dari 5</div>
+                    </div>
+                    
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+                        <!-- Input Form -->
+                        <div class="space-y-6">
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Transportasi Harian</label>
+                                <select id="transportMode" class="w-full p-3 border rounded-lg" onchange="calculateCarbon()">
+                                    <option value="walk">Jalan Kaki</option>
+                                    <option value="bike">Sepeda</option>
+                                    <option value="motorbike">Motor</option>
+                                    <option value="car">Mobil Pribadi</option>
+                                    <option value="bus">Bus</option>
+                                    <option value="train">Kereta</option>
+                                </select>
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Jarak Tempuh (km/hari)</label>
+                                <input type="number" id="dailyDistance" value="10" min="0" class="w-full p-3 border rounded-lg" onchange="calculateCarbon()">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Konsumsi Listrik Rumah (kWh/bulan)</label>
+                                <input type="number" id="electricityUsage" value="300" min="0" class="w-full p-3 border rounded-lg" onchange="calculateCarbon()">
+                            </div>
+                            
+                            <div>
+                                <label class="block text-sm font-medium mb-2">Pola Makan</label>
+                                <select id="dietType" class="w-full p-3 border rounded-lg" onchange="calculateCarbon()">
+                                    <option value="omnivore">Omnivora (makan segala)</option>
+                                    <option value="pescatarian">Pescatarian (ikan + nabati)</option>
+                                    <option value="vegetarian">Vegetarian</option>
+                                    <option value="vegan">Vegan</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <!-- Results -->
+                        <div class="bg-gradient-to-br from-blue-50 to-green-50 rounded-lg p-6">
+                            <h4 class="font-bold text-lg mb-4 text-center">Jejak Karbon Harianmu</h4>
+                            <div class="text-center mb-6">
+                                <div class="text-4xl font-bold text-green-600" id="totalCarbon">4.2</div>
+                                <div class="text-sm text-gray-600">kg CO₂ per hari</div>
+                            </div>
+                            
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm">🚗 Transportasi:</span>
+                                    <span class="font-semibold" id="transportCarbon">2.1 kg</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm">⚡ Listrik:</span>
+                                    <span class="font-semibold" id="electricityCarbon">1.5 kg</span>
+                                </div>
+                                <div class="flex justify-between items-center">
+                                    <span class="text-sm">🍽️ Makanan:</span>
+                                    <span class="font-semibold" id="foodCarbon">0.6 kg</span>
+                                </div>
+                            </div>
+                            
+                            <div class="mt-6 p-3 bg-white rounded-lg">
+                                <div class="text-xs text-gray-600 mb-1">Perbandingan dengan rata-rata:</div>
+                                <div class="bg-gray-200 rounded-full h-2">
+                                    <div class="bg-green-500 h-2 rounded-full progress-bar" id="comparisonBar" style="width: 70%"></div>
+                                </div>
+                                <div class="text-xs text-green-600 mt-1" id="comparisonText">30% lebih rendah dari rata-rata!</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="mt-8 flex justify-between">
+                        <button class="bg-gray-300 text-gray-600 px-6 py-2 rounded-lg cursor-not-allowed">Sebelumnya</button>
+                        <button onclick="nextModuleStep()" class="bg-green-500 text-white px-6 py-2 rounded-lg hover:bg-green-600 transition-colors">Lanjutkan</button>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Virtual Forest Modal -->
+        <div id="forestModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-xl p-8 max-w-2xl w-full mx-4">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">🌳 Hutan Virtual Kamu</h3>
+                    <button onclick="closeModal('forestModal')" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+                
+                <div class="bg-gradient-to-b from-blue-200 to-green-300 rounded-lg p-8 text-center">
+                    <div class="text-6xl mb-4">🌲🌳🌲🌿🌱🌳🌲🌿</div>
+                    <div class="text-2xl font-bold text-green-800 mb-2">47 Pohon Ditanam!</div>
+                    <p class="text-green-700 mb-4">Setiap 100 Eco-Points = 1 pohon virtual</p>
+                    <div class="bg-white/50 rounded-lg p-4">
+                        <div class="text-sm text-green-800">Dampak Positif:</div>
+                        <div class="font-bold text-green-900">~94 kg CO₂ diserap per tahun</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Project Form Modal -->
+        <div id="projectModal" class="fixed inset-0 bg-black bg-opacity-50 hidden items-center justify-center z-50">
+            <div class="bg-white rounded-xl p-8 max-w-lg w-full mx-4">
+                <div class="flex justify-between items-center mb-6">
+                    <h3 class="text-xl font-bold">🌱 Buat Proyek Baru</h3>
+                    <button onclick="closeModal('projectModal')" class="text-gray-500 hover:text-gray-700 text-2xl">&times;</button>
+                </div>
+                
+                <form class="space-y-4">
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Nama Proyek</label>
+                        <input type="text" class="w-full p-3 border rounded-lg" placeholder="Contoh: Kampanye Kurangi Plastik">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Deskripsi</label>
+                        <textarea class="w-full p-3 border rounded-lg h-24" placeholder="Jelaskan tujuan dan rencana proyekmu..."></textarea>
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Lokasi</label>
+                        <input type="text" class="w-full p-3 border rounded-lg" placeholder="Kota/Sekolah">
+                    </div>
+                    
+                    <div>
+                        <label class="block text-sm font-medium mb-2">Target Anggota</label>
+                        <input type="number" class="w-full p-3 border rounded-lg" placeholder="5" min="1">
+                    </div>
+                    
+                    <button type="submit" class="w-full bg-green-500 text-white py-3 rounded-lg hover:bg-green-600 transition-colors">Buat Proyek</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Global state
+        let currentSection = 'dashboard';
+        let userPoints = 1250;
+        let carbonData = {
+            transport: 2.1,
+            electricity: 1.5,
+            food: 0.6,
+            total: 4.2
+        };
+
+        // Navigation
+        function showSection(sectionId) {
+            // Hide all sections
+            document.querySelectorAll('.section-content').forEach(section => {
+                section.classList.add('hidden');
+            });
+            
+            // Show selected section
+            document.getElementById(sectionId).classList.remove('hidden');
+            currentSection = sectionId;
+        }
+
+        // Module functions
+        function startModule(moduleId) {
+            showSection(`module-${moduleId}`);
+        }
+
+        function continueModule(moduleId) {
+            showSection(`module-${moduleId}`);
+        }
+
+        function nextModuleStep() {
+            // Add points for completing step
+            userPoints += 50;
+            document.getElementById('userPoints').textContent = userPoints.toLocaleString();
+            
+            // Show completion message
+            alert('Selamat! Kamu mendapat 50 Eco-Points! 🎉');
+        }
+
+        // Carbon calculator
+        function calculateCarbon() {
+            const transport = document.getElementById('transportMode').value;
+            const distance = parseFloat(document.getElementById('dailyDistance').value) || 0;
+            const electricity = parseFloat(document.getElementById('electricityUsage').value) || 0;
+            const diet = document.getElementById('dietType').value;
+
+            // Transport emissions (kg CO2 per km)
+            const transportEmissions = {
+                walk: 0,
+                bike: 0,
+                motorbike: 0.1,
+                car: 0.2,
+                bus: 0.05,
+                train: 0.03
+            };
+
+            // Calculate emissions
+            const transportCarbon = (transportEmissions[transport] || 0) * distance;
+            const electricityCarbon = (electricity / 30) * 0.5; // Rough estimate per day
+            
+            const dietEmissions = {
+                omnivore: 2.5,
+                pescatarian: 1.8,
+                vegetarian: 1.2,
+                vegan: 0.8
+            };
+            const foodCarbon = dietEmissions[diet] || 2.5;
+
+            const total = transportCarbon + electricityCarbon + foodCarbon;
+
+            // Update display
+            document.getElementById('transportCarbon').textContent = transportCarbon.toFixed(1) + ' kg';
+            document.getElementById('electricityCarbon').textContent = electricityCarbon.toFixed(1) + ' kg';
+            document.getElementById('foodCarbon').textContent = foodCarbon.toFixed(1) + ' kg';
+            document.getElementById('totalCarbon').textContent = total.toFixed(1);
+
+            // Update comparison (average is ~6 kg CO2/day)
+            const percentage = Math.max(0, Math.min(100, (total / 6) * 100));
+            document.getElementById('comparisonBar').style.width = percentage + '%';
+            
+            if (total < 4) {
+                document.getElementById('comparisonText').textContent = 'Luar biasa! Jauh di bawah rata-rata!';
+                document.getElementById('comparisonBar').className = 'bg-green-500 h-2 rounded-full progress-bar';
+            } else if (total < 6) {
+                document.getElementById('comparisonText').textContent = 'Bagus! Di bawah rata-rata nasional';
+                document.getElementById('comparisonBar').className = 'bg-yellow-500 h-2 rounded-full progress-bar';
+            } else {
+                document.getElementById('comparisonText').textContent = 'Masih bisa diperbaiki!';
+                document.getElementById('comparisonBar').className = 'bg-red-500 h-2 rounded-full progress-bar';
+            }
+        }
+
+        // Eco-Lab Simulator
+        function updateSimulation() {
+            const pollution = document.getElementById('pollutionSlider').value;
+            const deforestation = document.getElementById('deforestationSlider').value;
+            const temperature = document.getElementById('temperatureSlider').value;
+
+            // Update slider values
+            document.getElementById('pollutionValue').textContent = pollution + '%';
+            document.getElementById('deforestationValue').textContent = deforestation + '%';
+            document.getElementById('temperatureValue').textContent = '+' + temperature + '°C';
+
+            // Calculate air quality
+            let airQuality = 'Baik';
+            let airQualityColor = 'text-green-600';
+            if (pollution > 70) {
+                airQuality = 'Berbahaya';
+                airQualityColor = 'text-red-600';
+            } else if (pollution > 40) {
+                airQuality = 'Tidak Sehat';
+                airQualityColor = 'text-orange-600';
+            } else if (pollution > 20) {
+                airQuality = 'Sedang';
+                airQualityColor = 'text-yellow-600';
+            }
+
+            // Calculate forest cover
+            const forestCover = Math.max(0, 100 - parseInt(deforestation));
+            
+            // Calculate climate risk
+            let climateRisk = 'Rendah';
+            let climateColor = 'text-green-600';
+            const riskScore = (parseInt(pollution) + parseInt(deforestation) + parseFloat(temperature) * 20) / 3;
+            
+            if (riskScore > 60) {
+                climateRisk = 'Tinggi';
+                climateColor = 'text-red-600';
+            } else if (riskScore > 30) {
+                climateRisk = 'Sedang';
+                climateColor = 'text-yellow-600';
+            }
+
+            // Update display
+            document.getElementById('airQuality').textContent = airQuality;
+            document.getElementById('airQuality').className = 'font-bold ' + airQualityColor;
+            document.getElementById('forestCover').textContent = forestCover + '%';
+            document.getElementById('climateRisk').textContent = climateRisk;
+            document.getElementById('climateRisk').className = 'font-bold ' + climateColor;
+
+            // Update earth emoji based on conditions
+            let earthEmoji = '🌍';
+            if (riskScore > 60) {
+                earthEmoji = '🌋';
+            } else if (riskScore > 30) {
+                earthEmoji = '🌤️';
+            }
+            document.getElementById('earthEmoji').textContent = earthEmoji;
+
+            // Update insight
+            let insight = 'Kondisi lingkungan saat ini masih dalam batas aman. Pertahankan upaya konservasi!';
+            if (riskScore > 60) {
+                insight = '⚠️ Kondisi lingkungan dalam bahaya! Diperlukan tindakan segera untuk mengurangi polusi dan deforestasi.';
+            } else if (riskScore > 30) {
+                insight = '⚡ Kondisi lingkungan mulai mengkhawatirkan. Perlu upaya lebih untuk menjaga keseimbangan ekosistem.';
+            }
+            document.getElementById('simulationInsight').textContent = insight;
+
+            // Add pollution particles effect
+            const particlesContainer = document.getElementById('pollutionParticles');
+            particlesContainer.innerHTML = '';
+            
+            if (pollution > 30) {
+                const particleCount = Math.floor(pollution / 10);
+                for (let i = 0; i < particleCount; i++) {
+                    const particle = document.createElement('div');
+                    particle.className = 'absolute w-1 h-1 bg-gray-400 rounded-full opacity-60';
+                    particle.style.left = Math.random() * 100 + '%';
+                    particle.style.top = Math.random() * 100 + '%';
+                    particle.style.animation = `float ${2 + Math.random() * 2}s ease-in-out infinite`;
+                    particlesContainer.appendChild(particle);
+                }
+            }
+        }
+
+        function resetSimulation() {
+            document.getElementById('pollutionSlider').value = 30;
+            document.getElementById('deforestationSlider').value = 20;
+            document.getElementById('temperatureSlider').value = 1.5;
+            updateSimulation();
+        }
+
+        // Community functions
+        function joinProject(projectId) {
+            userPoints += 25;
+            document.getElementById('userPoints').textContent = userPoints.toLocaleString();
+            alert('Berhasil bergabung dengan proyek! +25 Eco-Points 🎉');
+        }
+
+        // Modal functions
+        function showVirtualForest() {
+            document.getElementById('forestModal').classList.remove('hidden');
+            document.getElementById('forestModal').classList.add('flex');
+        }
+
+        function showProjectForm() {
+            document.getElementById('projectModal').classList.remove('hidden');
+            document.getElementById('projectModal').classList.add('flex');
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+            document.getElementById(modalId).classList.remove('flex');
+        }
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            calculateCarbon();
+            updateSimulation();
+            
+            // Close modals when clicking outside
+            document.getElementById('forestModal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal('forestModal');
+            });
+            
+            document.getElementById('projectModal').addEventListener('click', function(e) {
+                if (e.target === this) closeModal('projectModal');
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9935fb68764240a3',t:'MTc2MTI3MjI5MC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
 
